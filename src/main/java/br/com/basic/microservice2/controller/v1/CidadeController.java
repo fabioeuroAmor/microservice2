@@ -1,6 +1,7 @@
 package br.com.basic.microservice2.controller.v1;
 
 
+import br.com.basic.microservice2.dto.CidadeDto;
 import br.com.basic.microservice2.json.Response;
 import br.com.basic.microservice2.service.CidadeService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,16 @@ public class CidadeController {
     public ResponseEntity<Response> inserirCidade(@RequestParam(value = "dcTemperatura", required = true) Double dcTemperatura, @RequestParam(value = "estado", required = true) String estado,
                                                   @RequestParam(value = "dcNome", required = true) String dcNome) {
         Response response = new Response();
-
+        CidadeDto cidadeDto= null;
         try {
+            cidadeDto = new CidadeDto();
+
+            cidadeDto.setDcTemperatura(dcTemperatura);
+            cidadeDto.setEstado(estado);
+            cidadeDto.setDcNome(dcNome);
+
+            response.setModeloRetorno(cidadeService.inserirCidade(cidadeDto));
+            response.setMensagensRetorno("Insercao da cidade realizada com sucesso!");
 
         }catch (Exception e){
           log.error("Erro ao cosumir o servico: " + e.getMessage());

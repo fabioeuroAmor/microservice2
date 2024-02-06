@@ -28,8 +28,8 @@ public class Cidade implements Serializable{
 	@Column(name="dc_temperatura")
 	Double dcTemperatura;
 	
-	@Column(name="v10m")
-	Double v10m;
+	@Column(name="estado")
+	String estado;
 	
 	@Column(name="dc_nome")
 	String dcNome;

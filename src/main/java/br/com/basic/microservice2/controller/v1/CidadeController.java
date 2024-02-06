@@ -47,5 +47,22 @@ public class CidadeController {
 
     }
 
+    @GetMapping()
+    public ResponseEntity<Response> buscarTodasCidades() {
+        Response response = new Response();
+
+        try {
+            response.setModeloRetorno(cidadeService.buscarTodas());
+            response.setMensagensRetorno("Lista de todas as cidades!" );
+
+        }catch (Exception e){
+            log.error("Erro ao consultar todas as cidades: " + e.getMessage());
+            response.setMensagensRetorno(e.getMessage());
+            return  (ResponseEntity<Response>) ResponseEntity.status(500);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
 
 }

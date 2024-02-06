@@ -44,7 +44,7 @@
             <scope>provided</scope>-->
 			<optional>true</optional>
 		</dependency>
-
+		<!-- LOMBOCK -->
 		<!-- MAPPER -->
 		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 		<dependency>
@@ -52,7 +52,8 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.4.4</version>
 		</dependency>
-
+		<!-- MAPPER -->
+        <!--Dependencia para uso do Kafka-->
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-streams</artifactId>
@@ -60,6 +61,13 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
+		</dependency>
+		<!--Dependencia para uso do Kafka-->
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
 		</dependency>
 
 	</dependencies>

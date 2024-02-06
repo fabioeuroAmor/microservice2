@@ -10,7 +10,7 @@ public class CidadeService {
     @Autowired
     private CidadeKafkaProducer cidadeKafkaProducer;
 
-    public void send(){
-        cidadeKafkaProducer.send("Mensagem de teste enviada ao tópico");
+    public void send(String mensagem){
+        cidadeKafkaProducer.send(mensagem);
     }
 }

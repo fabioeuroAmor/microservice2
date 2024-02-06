@@ -17,8 +17,13 @@ public class CidadeKafkaProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     public void send(String message){
-        log.info("Payload enviado: {}", message);
-        kafkaTemplate.send(topicName, message);
+        try {
+            log.info("Payload enviado: {}", message);
+            kafkaTemplate.send(topicName, message);
+        }catch (Exception e){
+            log.error("Erro ao produzir mensagem no topico : " + e.getMessage());
+        }
+
     }
 
 }

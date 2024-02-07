@@ -94,21 +94,7 @@ public class CidadeController {
         }
         return ResponseEntity.ok(response);
     }
-    @GetMapping(value = "/searchPag")
-    public ResponseEntity<Response> searchPag(@RequestParam(value = "searchTerm", required = true) String searchTerm, @RequestParam(value = "page", required = true) Integer page, @RequestParam(value = "size", required = true) Integer size){
 
-        Response response = new Response();
-
-        try {
-            response.setModeloRetorno(cidadeService.searchPag( searchTerm,  page.intValue(),  size.intValue()));
-            response.setMensagensRetorno("Consulta por dcNome com resposta pagisnada no searchPag!" );
-        }catch (Exception e){
-            log.error("Erro ao consultar a cidade pelo nome no searchPag: " + e.getMessage());
-            response.setMensagensRetorno(e.getMessage());
-            return  (ResponseEntity<Response>) ResponseEntity.status(500);
-        }
-        return ResponseEntity.ok(response);
-    }
     @GetMapping(value = "/findAllPag")
     public ResponseEntity<Response> findAllPag(@RequestParam(value = "page", required = true) Integer page, @RequestParam(value = "size", required = true) Integer size){
         Response response = new Response();

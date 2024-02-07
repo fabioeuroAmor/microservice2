@@ -105,52 +105,7 @@ public class CidadeService {
         return cidadePers;
     }
 
-    public PaginatedResponseDto searchPag(String searchTerm, int page, int size){
-        PaginatedResponseDto paginatedResponseDto = new PaginatedResponseDto();
-        ArrayList<Cidade> cidadesPers = new ArrayList<>();
-        ArrayList<Cidade> cidadesPersQuantCorr = new ArrayList<>();
-        ArrayList<CidadeDto> arrayCidadestDto = new ArrayList<>();
 
-        //Objeto com informacao da pagisnacao
-        Page<Cidade> arrayCidadePag = null;
-
-        try {
-            //Objeto com filtro da pagisnacao
-            PageRequest pageRequest = PageRequest.of(
-                    page,
-                    size,
-                    Sort.Direction.ASC,"dcNome");
-            //Objeto que contem informacoes da pagisnacao
-            arrayCidadePag =  cidadeRepository.searchPag(searchTerm.toLowerCase(),pageRequest);
-
-            cidadesPers = (ArrayList<Cidade>) cidadeRepository.search(searchTerm);
-
-
-            // Pegar elementos de 0 a 4
-//            for (int i = 0; i < size; i++) {
-//                Cidade objetoAtual = cidadesPers.get(i);
-//                cidadesPersQuantCorr.add(objetoAtual);
-//                //System.out.println("Elemento " + i + ": " + objetoAtual.getDescricao());
-//            }
-
-            ModelMapper modelMapper = new ModelMapper();
-            // Defina o tipo de destino usando TypeToken
-            Type destinationListType = new TypeToken<List<CidadeDto>>() {}.getType();
-
-            arrayCidadestDto  = modelMapper.map(cidadesPers, destinationListType);
-
-            paginatedResponseDto.setData(arrayCidadestDto);
-            paginatedResponseDto.setPage(arrayCidadePag.getPageable().getPageNumber());
-            paginatedResponseDto.setTotalElements(cidadesPers.size());
-            paginatedResponseDto.setPageSize(arrayCidadePag.getPageable().getPageSize());
-
-
-        }catch (Exception e){
-            log.error("Erro na camda de servico ao realizar searchPag no banco de dados: " + e.getMessage());
-            throw new BDException(e.getMessage());
-        }
-        return paginatedResponseDto;
-    }
 
     public PaginatedResponseDto findAllPag(int page, int size) {
 
@@ -169,7 +124,7 @@ public class CidadeService {
 
            paginatedResponseDto.setData(arrayCidadesDto);
            paginatedResponseDto.setPage(page);
-           paginatedResponseDto.setPageSize(size);
+           paginatedResponseDto.setSize(size);
            paginatedResponseDto.setTotalElements(arrayCidadesDto.size());
 
        }catch (Exception e){

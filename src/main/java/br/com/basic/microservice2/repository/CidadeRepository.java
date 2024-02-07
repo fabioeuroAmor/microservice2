@@ -20,10 +20,6 @@ public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
 	List<Cidade> search(@Param("searchTerm") String searchTerm);
 
 	/* Query JPQL */
-	@Query("FROM Cidade c  WHERE LOWER(c.dcNome) like %:searchTerm%")
-	Page<Cidade> searchPag(@Param("searchTerm") String searchTerm, Pageable pageable);
-
-	/* Query JPQL */
 	@Query("SELECT c FROM Cidade c WHERE c.dcNome = :dcNome")
     Cidade buscarPorNome(@Param("dcNome") String dcNome);
 

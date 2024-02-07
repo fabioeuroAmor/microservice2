@@ -17,7 +17,7 @@ public class PaginatedResponseDto {
 
     private int page;
 
-    private int pageSize;
+    private int size;
 
     private long totalElements;
 

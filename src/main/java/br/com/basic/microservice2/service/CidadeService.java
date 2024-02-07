@@ -113,8 +113,6 @@ public class CidadeService {
        try{
            arrayCidadePag = cidadeRepository.findAll(PageRequest.of(page,size)).getContent();
 
-          //int teste =  cidadeRepository.findAll().size();
-
            ModelMapper modelMapper = new ModelMapper();
            // Defina o tipo de destino usando TypeToken
            Type destinationListType = new TypeToken<List<CidadeDto>>() {}.getType();
@@ -134,5 +132,33 @@ public class CidadeService {
         return paginatedResponseDto;
     }
 
+
+    public PaginatedResponseDto searchPag(String searchTerm, int page, int size) {
+
+        PaginatedResponseDto paginatedResponseDto = new PaginatedResponseDto();
+        List<Cidade> arrayCidadePag = new ArrayList<>();
+        ArrayList<CidadeDto> arrayCidadesDto = new ArrayList<>();
+        try{
+            arrayCidadePag = cidadeRepository.searchPag(searchTerm ,PageRequest.of(page,size)).getContent();
+
+            ModelMapper modelMapper = new ModelMapper();
+            // Defina o tipo de destino usando TypeToken
+            Type destinationListType = new TypeToken<List<CidadeDto>>() {}.getType();
+
+            arrayCidadesDto  = modelMapper.map(arrayCidadePag, destinationListType);
+
+            paginatedResponseDto.setData(arrayCidadesDto);
+            paginatedResponseDto.setPage(page);
+            paginatedResponseDto.setSize(size);
+            paginatedResponseDto.setTotalElements(arrayCidadePag.size());
+            paginatedResponseDto.setTotalElementsNoBanco(cidadeRepository.search(searchTerm).size());
+
+        }catch (Exception e){
+            log.error("Erro na camda de servico ao realizar searchPag no banco de dados: " + e.getMessage());
+            throw new BDException(e.getMessage());
+        }
+        return paginatedResponseDto;
+
+    }
 
 }

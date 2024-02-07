@@ -72,4 +72,36 @@ public class CidadeService {
         }
         return arrayCidadesDestDto;
     }
+
+    public CidadeDto buscarPorNome(String dcNome){
+        CidadeDto cidadePers = null;
+        try {
+            ModelMapper modelMapper = new ModelMapper();
+            Cidade cidade =  cidadeRepository.buscarPorNome(dcNome);
+            cidadePers = modelMapper.map(cidade, CidadeDto.class);
+        }catch (Exception e) {
+            log.error("Erro na camda de servico ao realizar a buscaPornome no banco de dados: " + e.getMessage());
+            throw new BDException(e.getMessage());
+        }
+
+        return cidadePers;
+
+    }
+
+    public CidadeDto buscarPorNomeQueryNativa(String dcNome){
+        CidadeDto cidadePers = null;
+        try {
+            ModelMapper modelMapper = new ModelMapper();
+            Cidade cidade =  cidadeRepository.buscarPorNomeQueryNativa(dcNome);
+            cidadePers = modelMapper.map(cidade, CidadeDto.class);
+        }catch (Exception e) {
+            log.error("Erro na camda de servico ao realizar a buscaPornome no banco de dados: " + e.getMessage());
+            throw new BDException(e.getMessage());
+        }
+
+        return cidadePers;
+
+    }
+
+
 }

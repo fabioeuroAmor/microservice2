@@ -64,5 +64,41 @@ public class CidadeController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = "/{dcNome}")
+    public ResponseEntity<Response> buscaCidadesPorNome(@PathVariable("dcNome") String dcNome){
+
+        Response response = new Response();
+
+        try {
+            response.setModeloRetorno(cidadeService.buscarPorNome(dcNome));
+            response.setMensagensRetorno("Cidade encontrada na consulta por nome!" );
+
+        }catch (Exception e){
+            log.error("Erro ao consultar a cidade pelo nome: " + e.getMessage());
+            response.setMensagensRetorno(e.getMessage());
+            return  (ResponseEntity<Response>) ResponseEntity.status(500);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "/query/nativa/{dcNome}")
+    public ResponseEntity<Response> buscarPorNomeQueryNativa(@PathVariable("dcNome") String dcNome){
+
+        Response response = new Response();
+
+        try {
+            response.setModeloRetorno(cidadeService.buscarPorNomeQueryNativa(dcNome));
+            response.setMensagensRetorno("Cidade encontrada na consulta por nome de uma query nativa!" );
+
+        }catch (Exception e){
+            log.error("Erro ao consultar a cidade pelo nome: " + e.getMessage());
+            response.setMensagensRetorno(e.getMessage());
+            return  (ResponseEntity<Response>) ResponseEntity.status(500);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
 
 }

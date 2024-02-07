@@ -29,6 +29,6 @@ public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
 	Page<Cidade> findAll(Pageable pageable);
 
 	/* Query JPQL */
-	@Query("FROM Cidade c WHERE c.dcNome like %:searchTerm% ")
+	@Query("FROM Cidade c WHERE c.dcNome like %:searchTerm% order by c.idCidade asc")
 	Page<Cidade> searchPag(@Param("searchTerm") String searchTerm, Pageable pageable);
 }

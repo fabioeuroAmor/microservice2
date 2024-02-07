@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -100,7 +104,42 @@ public class CidadeService {
         }
 
         return cidadePers;
+    }
 
+    public Page<Cidade> searchPag(String searchTerm, int page, int size){
+        Page<Cidade> arrayCidadePag = null;
+        try {
+            PageRequest pageRequest = PageRequest.of(
+                    page,
+                    size,
+                    Sort.Direction.ASC,"dcNome");
+
+            arrayCidadePag =  cidadeRepository.searchPag(searchTerm.toLowerCase(),pageRequest);
+        }catch (Exception e){
+            log.error("Erro na camda de servico ao realizar searchPag no banco de dados: " + e.getMessage());
+            throw new BDException(e.getMessage());
+        }
+        return arrayCidadePag;
+    }
+
+    public Page<Cidade> findAllPag() {
+        Page<Cidade> arrayCidadePag = null;
+       try{
+           int page = 0;
+           int size = 10;
+           PageRequest pageRequest = PageRequest.of(
+                   page,
+                   size,
+                   Sort.Direction.ASC,
+                   "dcNome");
+           arrayCidadePag =  new PageImpl<>(
+                   cidadeRepository.findAll(),
+                   pageRequest, size);
+       }catch (Exception e){
+           log.error("Erro na camda de servico ao realizar searchPag no banco de dados: " + e.getMessage());
+           throw new BDException(e.getMessage());
+       }
+        return arrayCidadePag;
     }
 
 

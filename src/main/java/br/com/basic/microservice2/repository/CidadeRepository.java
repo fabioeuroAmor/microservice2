@@ -2,6 +2,8 @@ package br.com.basic.microservice2.repository;
 
 
 import br.com.basic.microservice2.domain.Cidade;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,10 +13,14 @@ import java.util.List;
 
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
-	
+
 	/* Query JPQL */
 	@Query("FROM Cidade c WHERE LOWER(c.dcNome) like %:searchTerm% ")
 	List<Cidade> search(@Param("searchTerm") String searchTerm);
+
+	/* Query JPQL */
+	@Query("FROM Cidade c  WHERE LOWER(c.dcNome) like %:searchTerm%")
+	Page<Cidade> searchPag(@Param("searchTerm") String searchTerm, Pageable pageable);
 
 	/* Query JPQL */
 	@Query("SELECT c FROM Cidade c WHERE c.dcNome = :dcNome")
@@ -23,6 +29,7 @@ public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
 	/* Query NATIVA */
 	@Query(value = "SELECT * FROM TBL_CIDADE c WHERE c.dc_nome = :dcNome", nativeQuery = true)
 	Cidade buscarPorNomeQueryNativa(@Param("dcNome") String dcNome);
+
 	
 
 }

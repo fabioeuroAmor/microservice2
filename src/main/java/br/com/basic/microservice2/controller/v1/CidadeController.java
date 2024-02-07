@@ -42,9 +42,7 @@ public class CidadeController {
           response.setMensagensRetorno(e.getMessage());
           return  (ResponseEntity<Response>) ResponseEntity.status(500);
         }
-
         return ResponseEntity.ok(response);
-
     }
 
     @GetMapping()
@@ -60,7 +58,6 @@ public class CidadeController {
             response.setMensagensRetorno(e.getMessage());
             return  (ResponseEntity<Response>) ResponseEntity.status(500);
         }
-
         return ResponseEntity.ok(response);
     }
 
@@ -78,7 +75,6 @@ public class CidadeController {
             response.setMensagensRetorno(e.getMessage());
             return  (ResponseEntity<Response>) ResponseEntity.status(500);
         }
-
         return ResponseEntity.ok(response);
     }
 
@@ -96,8 +92,26 @@ public class CidadeController {
             response.setMensagensRetorno(e.getMessage());
             return  (ResponseEntity<Response>) ResponseEntity.status(500);
         }
-
         return ResponseEntity.ok(response);
+    }
+    @GetMapping(value = "/searchPag")
+    public ResponseEntity<Response> searchPag(@RequestParam(value = "searchTerm", required = true) String searchTerm, @RequestParam(value = "page", required = true) Integer page, @RequestParam(value = "size", required = true) Integer size){
+
+        Response response = new Response();
+
+        try {
+            response.setModeloRetorno(cidadeService.searchPag( searchTerm,  page.intValue(),  size.intValue()));
+            response.setMensagensRetorno("Consulta por dcNome ou estado com resposta pagisnada!" );
+        }catch (Exception e){
+            log.error("Erro ao consultar a cidade pelo nome: " + e.getMessage());
+            response.setMensagensRetorno(e.getMessage());
+            return  (ResponseEntity<Response>) ResponseEntity.status(500);
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity<Response> findAllPag(){
+        return null;
     }
 
 

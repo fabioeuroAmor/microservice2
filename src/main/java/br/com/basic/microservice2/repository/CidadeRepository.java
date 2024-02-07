@@ -26,9 +26,8 @@ public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
 	@Query(value = "SELECT * FROM TBL_CIDADE c WHERE c.dc_nome = :dcNome", nativeQuery = true)
 	Cidade buscarPorNomeQueryNativa(@Param("dcNome") String dcNome);
 
-
 	Page<Cidade> findAll(Pageable pageable);
-	
+
 	/* Query JPQL */
 	@Query("FROM Cidade c WHERE c.dcNome like %:searchTerm% ")
 	Page<Cidade> searchPag(@Param("searchTerm") String searchTerm, Pageable pageable);

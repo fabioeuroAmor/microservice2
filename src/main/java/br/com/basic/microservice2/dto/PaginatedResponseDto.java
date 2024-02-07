@@ -20,5 +20,6 @@ public class PaginatedResponseDto {
     private int size;
 
     private long totalElements;
+    private long totalElementsNoBanco;
 
 }

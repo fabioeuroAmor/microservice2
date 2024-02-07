@@ -9,16 +9,13 @@ import br.com.basic.microservice2.producer.CidadeKafkaProducer;
 import br.com.basic.microservice2.repository.CidadeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import org.modelmapper.TypeToken;
-
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -116,6 +113,8 @@ public class CidadeService {
        try{
            arrayCidadePag = cidadeRepository.findAll(PageRequest.of(page,size)).getContent();
 
+          //int teste =  cidadeRepository.findAll().size();
+
            ModelMapper modelMapper = new ModelMapper();
            // Defina o tipo de destino usando TypeToken
            Type destinationListType = new TypeToken<List<CidadeDto>>() {}.getType();
@@ -125,7 +124,8 @@ public class CidadeService {
            paginatedResponseDto.setData(arrayCidadesDto);
            paginatedResponseDto.setPage(page);
            paginatedResponseDto.setSize(size);
-           paginatedResponseDto.setTotalElements(arrayCidadesDto.size());
+           paginatedResponseDto.setTotalElements(arrayCidadePag.size());
+           paginatedResponseDto.setTotalElementsNoBanco(cidadeRepository.findAll().size());
 
        }catch (Exception e){
            log.error("Erro na camda de servico ao realizar searchPag no banco de dados: " + e.getMessage());

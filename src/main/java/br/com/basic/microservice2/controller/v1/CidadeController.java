@@ -116,9 +116,9 @@ public class CidadeController {
 
         try {
             response.setModeloRetorno(cidadeService.searchPag(searchTerm,page.intValue(),  size.intValue()));
-            response.setMensagensRetorno("Consulta por dcNome com resposta pagisnada no findAllPag!" );
+            response.setMensagensRetorno("Consulta por dcNome com resposta pagisnada no searchPag!" );
         }catch (Exception e){
-            log.error("Erro ao consultar a cidade pelo nome no findAllPag: " + e.getMessage());
+            log.error("Erro ao consultar a cidade pelo nome no searchPag: " + e.getMessage());
             response.setMensagensRetorno(e.getMessage());
             return  (ResponseEntity<Response>) ResponseEntity.status(500);
         }

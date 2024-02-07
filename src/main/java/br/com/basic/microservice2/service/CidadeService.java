@@ -2,6 +2,7 @@ package br.com.basic.microservice2.service;
 
 import br.com.basic.microservice2.domain.Cidade;
 import br.com.basic.microservice2.dto.CidadeDto;
+import br.com.basic.microservice2.dto.PaginatedResponseDto;
 import br.com.basic.microservice2.exception.BDException;
 import br.com.basic.microservice2.exception.NegocioException;
 import br.com.basic.microservice2.producer.CidadeKafkaProducer;
@@ -106,20 +107,42 @@ public class CidadeService {
         return cidadePers;
     }
 
-    public Page<Cidade> searchPag(String searchTerm, int page, int size){
+    public PaginatedResponseDto searchPag(String searchTerm, int page, int size){
+        PaginatedResponseDto paginatedResponseDto = new PaginatedResponseDto();
+        List<Cidade> cidadesPers = null;
+        ArrayList<CidadeDto> arrayCidadestDto = new ArrayList<>();
+
+        //Objeto com informacao da pagisnacao
         Page<Cidade> arrayCidadePag = null;
+
         try {
+            //Objeto com filtro da pagisnacao
             PageRequest pageRequest = PageRequest.of(
                     page,
                     size,
                     Sort.Direction.ASC,"dcNome");
-
+            //Objeto que contem informacoes da pagisnacao
             arrayCidadePag =  cidadeRepository.searchPag(searchTerm.toLowerCase(),pageRequest);
+
+            cidadesPers = cidadeRepository.search(searchTerm);
+
+            ModelMapper modelMapper = new ModelMapper();
+            // Defina o tipo de destino usando TypeToken
+            Type destinationListType = new TypeToken<List<CidadeDto>>() {}.getType();
+
+            arrayCidadestDto  = modelMapper.map(cidadesPers, destinationListType);
+
+            paginatedResponseDto.setData(arrayCidadestDto);
+            paginatedResponseDto.setPage(arrayCidadePag.getPageable().getPageNumber());
+            paginatedResponseDto.setTotalElements(cidadesPers.size());
+            paginatedResponseDto.setPageSize(arrayCidadePag.getPageable().getPageSize());
+
+
         }catch (Exception e){
             log.error("Erro na camda de servico ao realizar searchPag no banco de dados: " + e.getMessage());
             throw new BDException(e.getMessage());
         }
-        return arrayCidadePag;
+        return paginatedResponseDto;
     }
 
     public Page<Cidade> findAllPag() {

@@ -15,7 +15,7 @@ import java.util.List;
 public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
 
 	/* Query JPQL */
-	@Query("FROM Cidade c WHERE LOWER(c.dcNome) like %:searchTerm% ")
+	@Query("FROM Cidade c WHERE c.dcNome like %:searchTerm% ")
 	List<Cidade> search(@Param("searchTerm") String searchTerm);
 
 	/* Query JPQL */

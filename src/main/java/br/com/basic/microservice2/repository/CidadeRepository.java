@@ -12,12 +12,15 @@ import java.util.List;
 @Repository
 public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
 	
+	/* Query JPQL */
 	@Query("FROM Cidade c WHERE LOWER(c.dcNome) like %:searchTerm% ")
 	List<Cidade> search(@Param("searchTerm") String searchTerm);
 
+	/* Query JPQL */
 	@Query("SELECT c FROM Cidade c WHERE c.dcNome = :dcNome")
     Cidade buscarPorNome(@Param("dcNome") String dcNome);
 
+	/* Query NATIVA */
 	@Query(value = "SELECT * FROM TBL_CIDADE c WHERE c.dc_nome = :dcNome", nativeQuery = true)
 	Cidade buscarPorNomeQueryNativa(@Param("dcNome") String dcNome);
 	

@@ -7,12 +7,10 @@ import br.com.basic.microservice2.exception.BDException;
 import br.com.basic.microservice2.exception.NegocioException;
 import br.com.basic.microservice2.producer.CidadeKafkaProducer;
 import br.com.basic.microservice2.repository.CidadeRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -109,7 +107,8 @@ public class CidadeService {
 
     public PaginatedResponseDto searchPag(String searchTerm, int page, int size){
         PaginatedResponseDto paginatedResponseDto = new PaginatedResponseDto();
-        List<Cidade> cidadesPers = null;
+        ArrayList<Cidade> cidadesPers = new ArrayList<>();
+        ArrayList<Cidade> cidadesPersQuantCorr = new ArrayList<>();
         ArrayList<CidadeDto> arrayCidadestDto = new ArrayList<>();
 
         //Objeto com informacao da pagisnacao
@@ -124,7 +123,15 @@ public class CidadeService {
             //Objeto que contem informacoes da pagisnacao
             arrayCidadePag =  cidadeRepository.searchPag(searchTerm.toLowerCase(),pageRequest);
 
-            cidadesPers = cidadeRepository.search(searchTerm);
+            cidadesPers = (ArrayList<Cidade>) cidadeRepository.search(searchTerm);
+
+
+            // Pegar elementos de 0 a 4
+//            for (int i = 0; i < size; i++) {
+//                Cidade objetoAtual = cidadesPers.get(i);
+//                cidadesPersQuantCorr.add(objetoAtual);
+//                //System.out.println("Elemento " + i + ": " + objetoAtual.getDescricao());
+//            }
 
             ModelMapper modelMapper = new ModelMapper();
             // Defina o tipo de destino usando TypeToken
@@ -145,24 +152,31 @@ public class CidadeService {
         return paginatedResponseDto;
     }
 
-    public Page<Cidade> findAllPag() {
-        Page<Cidade> arrayCidadePag = null;
+    public PaginatedResponseDto findAllPag(int page, int size) {
+
+        PaginatedResponseDto paginatedResponseDto = new PaginatedResponseDto();
+        ArrayList<CidadeDto> arrayCidadesDto = new ArrayList<>();
+        List<Cidade> arrayCidadePag = new ArrayList<>();
+
        try{
-           int page = 0;
-           int size = 10;
-           PageRequest pageRequest = PageRequest.of(
-                   page,
-                   size,
-                   Sort.Direction.ASC,
-                   "dcNome");
-           arrayCidadePag =  new PageImpl<>(
-                   cidadeRepository.findAll(),
-                   pageRequest, size);
+           arrayCidadePag = cidadeRepository.findAll(PageRequest.of(page,size)).getContent();
+
+           ModelMapper modelMapper = new ModelMapper();
+           // Defina o tipo de destino usando TypeToken
+           Type destinationListType = new TypeToken<List<CidadeDto>>() {}.getType();
+
+           arrayCidadesDto  = modelMapper.map(arrayCidadePag, destinationListType);
+
+           paginatedResponseDto.setData(arrayCidadesDto);
+           paginatedResponseDto.setPage(page);
+           paginatedResponseDto.setPageSize(size);
+           paginatedResponseDto.setTotalElements(arrayCidadesDto.size());
+
        }catch (Exception e){
            log.error("Erro na camda de servico ao realizar searchPag no banco de dados: " + e.getMessage());
            throw new BDException(e.getMessage());
        }
-        return arrayCidadePag;
+        return paginatedResponseDto;
     }
 
 

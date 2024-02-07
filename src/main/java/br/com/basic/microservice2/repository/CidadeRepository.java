@@ -2,6 +2,7 @@ package br.com.basic.microservice2.repository;
 
 
 import br.com.basic.microservice2.domain.Cidade;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,6 +31,6 @@ public interface CidadeRepository extends JpaRepository<Cidade, Integer>{
 	@Query(value = "SELECT * FROM TBL_CIDADE c WHERE c.dc_nome = :dcNome", nativeQuery = true)
 	Cidade buscarPorNomeQueryNativa(@Param("dcNome") String dcNome);
 
-	
 
+	Page<Cidade> findAll(Pageable pageable);
 }

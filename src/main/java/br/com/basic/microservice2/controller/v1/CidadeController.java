@@ -145,12 +145,12 @@ public class CidadeController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Response> atualizar(@RequestHeader Map<String, String> headersReq, @RequestBody CidadeDto novaCidade){
+    public ResponseEntity<Response> atualizar(@RequestHeader Map<String, String> headersReq, @RequestBody CidadeDto cidade){
         Response response = new Response();
 
         try {
-              //response.setModeloRetorno(cidadeService.atualizar(novaCidade));
-//            response.setMensagensRetorno("Cidade atualizada da base de dados!" );
+              response.setModeloRetorno(cidadeService.atualizar(cidade));
+              response.setMensagensRetorno("Cidade atualizada da base de dados!" );
         }catch (Exception e){
             log.error("Erro ao atualizar a cidade da base de dados: " + e.getMessage());
             response.setMensagensRetorno(e.getMessage());

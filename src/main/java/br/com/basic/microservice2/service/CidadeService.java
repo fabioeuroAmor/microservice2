@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -172,6 +173,26 @@ public class CidadeService {
 
     }
 
+    public CidadeDto atualizar(CidadeDto cidade){
+        CidadeDto cidadeDto = new CidadeDto();
+        Cidade cidadeAtuPers = new Cidade();
+
+        try {
+
+            if(Objects.nonNull(buscaPorId(cidade.getIdCidade()))){
+                ModelMapper modelMapper = new ModelMapper();
+                Cidade cidadeAtu =   modelMapper.map(cidade, Cidade.class);
+                cidadeAtuPers = cidadeRepository.saveAndFlush(cidadeAtu);
+                cidadeDto = modelMapper.map(cidadeAtuPers, CidadeDto.class);
+            }
+
+        }catch (Exception e) {
+            log.error("Erro na camda de servico ao deleta a cidade: " + e.getMessage());
+            throw new NegocioException(e.getMessage());
+        }
+        return cidadeDto;
+    }
+
      public CidadeDto buscaPorId(Integer id){
          CidadeDto cidadeDto = new CidadeDto();
          try {
@@ -179,7 +200,7 @@ public class CidadeService {
            ModelMapper modelMapper = new ModelMapper();
            cidadeDto = modelMapper.map(cidade.get(), CidadeDto.class);
          }catch (Exception e) {
-             log.error("Erro na camda de servico ao deleta a cidade: " + e.getMessage());
+             log.error("Erro na camda de servico ao buscaPorId a cidade: " + e.getMessage());
              throw new NegocioException(e.getMessage());
          }
          return cidadeDto;

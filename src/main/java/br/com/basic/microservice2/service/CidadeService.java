@@ -161,4 +161,15 @@ public class CidadeService {
 
     }
 
+    public  CidadeDto delete(Integer id)throws BDException{
+        try {
+            cidadeRepository.deleteById(id);
+        }catch (Exception e) {
+            log.error("Erro na camda de servico ao deleta a cidade: " + e.getMessage());
+            throw new NegocioException(e.getMessage());
+        }
+
+        return null;
+    }
+
 }

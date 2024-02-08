@@ -125,5 +125,38 @@ public class CidadeController {
         return ResponseEntity.ok(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> delete(@PathVariable Integer id){
+        Response response = new Response();
+
+        try {
+           response.setModeloRetorno(cidadeService.delete(id));
+           response.setMensagensRetorno("Cidade deletada da base de dados!" );
+        }catch (Exception e){
+            log.error("Erro ao deletar a cidade da base de dados: " + e.getMessage());
+            response.setMensagensRetorno(e.getMessage());
+            return  (ResponseEntity<Response>) ResponseEntity.status(500);
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("")
+    public ResponseEntity<Response> atualizar(@RequestBody CidadeDto novaCidade){
+        Response response = new Response();
+
+        try {
+//            response.setModeloRetorno(cidadeService.delete(id));
+//            response.setMensagensRetorno("Cidade atualizada da base de dados!" );
+        }catch (Exception e){
+            log.error("Erro ao atualizar a cidade da base de dados: " + e.getMessage());
+            response.setMensagensRetorno(e.getMessage());
+            return  (ResponseEntity<Response>) ResponseEntity.status(500);
+        }
+        return ResponseEntity.ok(response);
+    }
+
+
+
+
 
 }

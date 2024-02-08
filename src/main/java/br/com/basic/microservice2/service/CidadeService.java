@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -161,7 +162,7 @@ public class CidadeService {
 
     }
 
-    public  CidadeDto delete(Integer id)throws BDException{
+    public  void delete(Integer id)throws BDException{
         try {
             cidadeRepository.deleteById(id);
         }catch (Exception e) {
@@ -169,7 +170,19 @@ public class CidadeService {
             throw new NegocioException(e.getMessage());
         }
 
-        return null;
+    }
+
+     public CidadeDto buscaPorId(Integer id){
+         CidadeDto cidadeDto = new CidadeDto();
+         try {
+           Optional<Cidade> cidade =   cidadeRepository.findById(id);
+           ModelMapper modelMapper = new ModelMapper();
+           cidadeDto = modelMapper.map(cidade.get(), CidadeDto.class);
+         }catch (Exception e) {
+             log.error("Erro na camda de servico ao deleta a cidade: " + e.getMessage());
+             throw new NegocioException(e.getMessage());
+         }
+         return cidadeDto;
     }
 
 }

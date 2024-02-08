@@ -81,6 +81,7 @@ public class CidadeController {
         return ResponseEntity.ok(response);
     }
 
+
     @GetMapping(value = "/query/nativa/{dcNome}")
     public ResponseEntity<Response> buscarPorNomeQueryNativa(@PathVariable("dcNome") String dcNome){
 
@@ -133,7 +134,7 @@ public class CidadeController {
         Response response = new Response();
 
         try {
-           response.setModeloRetorno(cidadeService.delete(id));
+            cidadeService.delete(id);
            response.setMensagensRetorno("Cidade deletada da base de dados!" );
         }catch (Exception e){
             log.error("Erro ao deletar a cidade da base de dados: " + e.getMessage());
@@ -148,7 +149,7 @@ public class CidadeController {
         Response response = new Response();
 
         try {
-//            response.setModeloRetorno(cidadeService.delete(id));
+              //response.setModeloRetorno(cidadeService.atualizar(novaCidade));
 //            response.setMensagensRetorno("Cidade atualizada da base de dados!" );
         }catch (Exception e){
             log.error("Erro ao atualizar a cidade da base de dados: " + e.getMessage());

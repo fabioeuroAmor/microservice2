@@ -179,7 +179,7 @@ public class CidadeService {
 
         try {
 
-            if(Objects.nonNull(buscaPorId(cidade.getIdCidade()))){
+            if(Objects.nonNull(cidadeRepository.findById(cidade.getIdCidade()))){
                 ModelMapper modelMapper = new ModelMapper();
                 Cidade cidadeAtu =   modelMapper.map(cidade, Cidade.class);
                 cidadeAtuPers = cidadeRepository.saveAndFlush(cidadeAtu);

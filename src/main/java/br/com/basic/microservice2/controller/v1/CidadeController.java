@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -141,7 +144,7 @@ public class CidadeController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Response> atualizar(@RequestBody CidadeDto novaCidade){
+    public ResponseEntity<Response> atualizar(@RequestHeader Map<String, String> headersReq, @RequestBody CidadeDto novaCidade){
         Response response = new Response();
 
         try {

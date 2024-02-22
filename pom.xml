@@ -69,6 +69,13 @@
 			<artifactId>gson</artifactId>
 			<version>2.10.1</version>
 		</dependency>
+		<!--Para mock de objetos em test unitario-->
+		<dependency>
+			<groupId>org.jeasy</groupId>
+			<artifactId>easy-random-core</artifactId>
+			<version>4.2.0</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 

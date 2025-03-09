@@ -46,53 +46,53 @@ public class CidadeRepositoryTest {
        //assertEquals("São Paulo", result.get(0).getDcNome());
     }
 
-//    @Test
-//    public void testBuscarPorNome() {
-//        // Dado
-//        Cidade cidade = new Cidade();
-//        cidade.setIdCidade(1);
-//        cidade.setDcNome("Rio de Janeiro");
-//
-//        when(cidadeRepositoryMock.buscarPorNome("Rio de Janeiro")).thenReturn(cidade);
-//
-//        // Quando
-//        Cidade result = cidadeRepositoryMock.buscarPorNome("Rio de Janeiro");
-//
-//        // Então
-//        assertEquals("Rio de Janeiro", result.getDcNome());
-//    }
-//
-//    @Test
-//    public void testBuscarPorNomeQueryNativa() {
-//        // Dado
-//        Cidade cidade = new Cidade();
-//        cidade.setIdCidade(1);
-//        cidade.setDcNome("Belo Horizonte");
-//
-//        when(cidadeRepositoryMock.buscarPorNomeQueryNativa("Belo Horizonte")).thenReturn(cidade);
-//
-//        // Quando
-//        Cidade result = cidadeRepositoryMock.buscarPorNomeQueryNativa("Belo Horizonte");
-//
-//        // Então
-//        assertEquals("Belo Horizonte", result.getDcNome());
-//    }
-//
-//    @Test
-//    public void testSearchPag() {
-//        // Dado
-//        Cidade cidade = new Cidade();
-//        cidade.setIdCidade(1);
-//        cidade.setDcNome("Curitiba");
-//
-//        Page<Cidade> page = new PageImpl<>(Arrays.asList(cidade));
-//        when(cidadeRepositoryMock.searchPag(eq("Cur"), any(Pageable.class))).thenReturn(page);
-//
-//        // Quando
-//        Page<Cidade> result = cidadeRepositoryMock.searchPag("Cur", Pageable.unpaged());
-//
-//        // Então
-//        assertEquals(1, result.getContent().size());
-//        assertEquals("Curitiba", result.getContent().get(0).getDcNome());
-//    }
+    @Test
+    public void testBuscarPorNome() {
+        // Dado
+        Cidade cidade = new Cidade();
+        cidade.setIdCidade(1);
+        cidade.setDcNome("Rio de Janeiro");
+
+        when(cidadeRepositoryMock.buscarPorNome("Rio de Janeiro")).thenReturn(cidade);
+
+        // Quando
+        Cidade result = cidadeRepositoryMock.buscarPorNome("Rio de Janeiro");
+
+        // Então
+        assertEquals("Rio de Janeiro", result.getDcNome());
+    }
+
+    @Test
+    public void testBuscarPorNomeQueryNativa() {
+        // Dado
+        Cidade cidade = new Cidade();
+        cidade.setIdCidade(1);
+        cidade.setDcNome("Belo Horizonte");
+
+        when(cidadeRepositoryMock.buscarPorNomeQueryNativa("Belo Horizonte")).thenReturn(cidade);
+
+        // Quando
+        Cidade result = cidadeRepositoryMock.buscarPorNomeQueryNativa("Belo Horizonte");
+
+        // Então
+        assertEquals("Belo Horizonte", result.getDcNome());
+    }
+
+    @Test
+    public void testSearchPag() {
+        // Dado
+        Cidade cidade = new Cidade();
+        cidade.setIdCidade(1);
+        cidade.setDcNome("Curitiba");
+
+        Page<Cidade> page = new PageImpl<>(Arrays.asList(cidade));
+        when(cidadeRepositoryMock.searchPag(eq("Cur"), any(Pageable.class))).thenReturn(page);
+
+        // Quando
+        Page<Cidade> result = cidadeRepositoryMock.searchPag("Cur", Pageable.unpaged());
+
+        // Então
+        assertEquals(1, result.getContent().size());
+        assertEquals("Curitiba", result.getContent().get(0).getDcNome());
+    }
 }

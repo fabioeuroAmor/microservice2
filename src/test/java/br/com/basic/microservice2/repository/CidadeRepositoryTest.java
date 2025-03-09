@@ -43,7 +43,7 @@ public class CidadeRepositoryTest {
 
         // Então
         assertEquals(0, result.size());
-       // assertEquals("São Paulo", result.get(0).getDcNome());
+       //assertEquals("São Paulo", result.get(0).getDcNome());
     }
 
 //    @Test

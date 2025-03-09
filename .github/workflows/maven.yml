@@ -36,5 +36,4 @@ jobs:
 permissions:
   contents: write
   actions: read
-  workspaces: read
       

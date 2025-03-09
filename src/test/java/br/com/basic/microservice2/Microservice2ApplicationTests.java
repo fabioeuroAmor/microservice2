@@ -3,7 +3,7 @@ package br.com.basic.microservice2;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
+@SpringBootTest
 class Microservice2ApplicationTests {
 
 //	@Test

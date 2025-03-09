@@ -47,7 +47,7 @@ public class CidadeService {
             cidade =  cidadeRepository.save(cidade);
             cidadePers = modelMapper.map(cidade, CidadeDto.class);
         }catch (Exception e) {
-            log.error("Erro na camda de servico ao realizar a insercao no banco de dados: " + e.getMessage());
+            log.error("Erro na camada de servico ao realizar a insercao no banco de dados: " + e.getMessage());
             throw new BDException(e.getMessage());
         }
 

@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-public class CidadeRepositoryTest {
+class CidadeRepositoryTest {
 
     @Mock
     private CidadeRepository cidadeRepositoryMock; // Mock da interface
@@ -29,7 +29,7 @@ public class CidadeRepositoryTest {
     }
 
     @Test
-    public void testSearch() {
+    void testSearch() {
         // Dado
         Cidade cidade = new Cidade();
         cidade.setIdCidade(1);
@@ -47,7 +47,7 @@ public class CidadeRepositoryTest {
     }
 
     @Test
-    public void testBuscarPorNome() {
+    void testBuscarPorNome() {
         // Dado
         Cidade cidade = new Cidade();
         cidade.setIdCidade(1);
@@ -63,7 +63,7 @@ public class CidadeRepositoryTest {
     }
 
     @Test
-    public void testBuscarPorNomeQueryNativa() {
+     void testBuscarPorNomeQueryNativa() {
         // Dado
         Cidade cidade = new Cidade();
         cidade.setIdCidade(1);
@@ -79,7 +79,7 @@ public class CidadeRepositoryTest {
     }
 
     @Test
-    public void testSearchPag() {
+     void testSearchPag() {
         // Dado
         Cidade cidade = new Cidade();
         cidade.setIdCidade(1);
